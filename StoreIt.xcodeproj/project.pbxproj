@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		62F3F26D2B7AA10700600B23 /* StoreItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F26C2B7AA10700600B23 /* StoreItApp.swift */; };
-		62F3F26F2B7AA10700600B23 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F26E2B7AA10700600B23 /* ContentView.swift */; };
-		62F3F2712B7AA10700600B23 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F2702B7AA10700600B23 /* Item.swift */; };
 		62F3F2732B7AA10800600B23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62F3F2722B7AA10800600B23 /* Assets.xcassets */; };
 		62F3F2762B7AA10800600B23 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62F3F2752B7AA10800600B23 /* Preview Assets.xcassets */; };
 		62F3F2822B7AA10800600B23 /* StoreItTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F2812B7AA10800600B23 /* StoreItTests.swift */; };
 		62F3F28C2B7AA10800600B23 /* StoreItUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F28B2B7AA10800600B23 /* StoreItUITests.swift */; };
 		62F3F28E2B7AA10800600B23 /* StoreItUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F28D2B7AA10800600B23 /* StoreItUITestsLaunchTests.swift */; };
+		62F3F29C2B7AA2F800600B23 /* StorageItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F29B2B7AA2F800600B23 /* StorageItemsView.swift */; };
+		62F3F29E2B7AA82700600B23 /* StorageItemsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F29D2B7AA82700600B23 /* StorageItemsCoordinator.swift */; };
+		62F3F2A12B7AA8D200600B23 /* AddStorageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F2A02B7AA8D200600B23 /* AddStorageItemView.swift */; };
+		62F3F2A52B7AAEDA00600B23 /* AddStorageItemPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F2A42B7AAEDA00600B23 /* AddStorageItemPresenter.swift */; };
+		62F3F2AD2B7AC32400600B23 /* StorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F2AC2B7AC32400600B23 /* StorageItem.swift */; };
+		62F3F2B02B7AC4A400600B23 /* StorageItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F2AF2B7AC4A400600B23 /* StorageItemRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +41,6 @@
 /* Begin PBXFileReference section */
 		62F3F2692B7AA10700600B23 /* StoreIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62F3F26C2B7AA10700600B23 /* StoreItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItApp.swift; sourceTree = "<group>"; };
-		62F3F26E2B7AA10700600B23 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		62F3F2702B7AA10700600B23 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		62F3F2722B7AA10800600B23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62F3F2752B7AA10800600B23 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		62F3F2772B7AA10800600B23 /* StoreIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StoreIt.entitlements; sourceTree = "<group>"; };
@@ -48,6 +50,12 @@
 		62F3F2872B7AA10800600B23 /* StoreItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62F3F28B2B7AA10800600B23 /* StoreItUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItUITests.swift; sourceTree = "<group>"; };
 		62F3F28D2B7AA10800600B23 /* StoreItUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		62F3F29B2B7AA2F800600B23 /* StorageItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemsView.swift; sourceTree = "<group>"; };
+		62F3F29D2B7AA82700600B23 /* StorageItemsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemsCoordinator.swift; sourceTree = "<group>"; };
+		62F3F2A02B7AA8D200600B23 /* AddStorageItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStorageItemView.swift; sourceTree = "<group>"; };
+		62F3F2A42B7AAEDA00600B23 /* AddStorageItemPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStorageItemPresenter.swift; sourceTree = "<group>"; };
+		62F3F2AC2B7AC32400600B23 /* StorageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItem.swift; sourceTree = "<group>"; };
+		62F3F2AF2B7AC4A400600B23 /* StorageItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +106,9 @@
 		62F3F26B2B7AA10700600B23 /* StoreIt */ = {
 			isa = PBXGroup;
 			children = (
+				62F3F2B22B7ACD4500600B23 /* Common */,
+				62F3F2A82B7AC18A00600B23 /* Scenes */,
 				62F3F26C2B7AA10700600B23 /* StoreItApp.swift */,
-				62F3F26E2B7AA10700600B23 /* ContentView.swift */,
-				62F3F2702B7AA10700600B23 /* Item.swift */,
 				62F3F2722B7AA10800600B23 /* Assets.xcassets */,
 				62F3F2772B7AA10800600B23 /* StoreIt.entitlements */,
 				62F3F2782B7AA10800600B23 /* Info.plist */,
@@ -132,6 +140,66 @@
 				62F3F28D2B7AA10800600B23 /* StoreItUITestsLaunchTests.swift */,
 			);
 			path = StoreItUITests;
+			sourceTree = "<group>";
+		};
+		62F3F29A2B7AA2E200600B23 /* StorageItems */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F2AE2B7AC48F00600B23 /* Repository */,
+				62F3F2AB2B7AC31800600B23 /* Model */,
+				62F3F2A92B7AC21400600B23 /* Views */,
+				62F3F29D2B7AA82700600B23 /* StorageItemsCoordinator.swift */,
+				62F3F2A42B7AAEDA00600B23 /* AddStorageItemPresenter.swift */,
+			);
+			path = StorageItems;
+			sourceTree = "<group>";
+		};
+		62F3F2A82B7AC18A00600B23 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F29A2B7AA2E200600B23 /* StorageItems */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		62F3F2A92B7AC21400600B23 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F2A02B7AA8D200600B23 /* AddStorageItemView.swift */,
+				62F3F29B2B7AA2F800600B23 /* StorageItemsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		62F3F2AB2B7AC31800600B23 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F2AC2B7AC32400600B23 /* StorageItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		62F3F2AE2B7AC48F00600B23 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F2AF2B7AC4A400600B23 /* StorageItemRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		62F3F2B22B7ACD4500600B23 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F2B32B7ACD4B00600B23 /* New Group */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		62F3F2B32B7ACD4B00600B23 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,9 +332,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62F3F26F2B7AA10700600B23 /* ContentView.swift in Sources */,
-				62F3F2712B7AA10700600B23 /* Item.swift in Sources */,
+				62F3F2AD2B7AC32400600B23 /* StorageItem.swift in Sources */,
+				62F3F2B02B7AC4A400600B23 /* StorageItemRepository.swift in Sources */,
+				62F3F29E2B7AA82700600B23 /* StorageItemsCoordinator.swift in Sources */,
 				62F3F26D2B7AA10700600B23 /* StoreItApp.swift in Sources */,
+				62F3F2A52B7AAEDA00600B23 /* AddStorageItemPresenter.swift in Sources */,
+				62F3F29C2B7AA2F800600B23 /* StorageItemsView.swift in Sources */,
+				62F3F2A12B7AA8D200600B23 /* AddStorageItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

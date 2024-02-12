@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-struct StorageItem {
+class StorageItem {
     let id: Int
     let name: String
     

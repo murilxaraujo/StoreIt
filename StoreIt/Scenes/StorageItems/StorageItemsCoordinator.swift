@@ -28,7 +28,8 @@ struct StorageItemsCoordinator {
     
     @ViewBuilder
     private func startAddStorageItem() -> some View {
-        let presenter = AddStorageItemPresenter()
+        let repository = StorageItemRepository(modelContext: modelContext)
+        let presenter = AddStorageItemPresenter(repository: repository)
         AddStorageItemView(presenter: presenter)
     }
 }
