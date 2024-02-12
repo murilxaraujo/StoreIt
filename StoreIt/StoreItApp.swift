@@ -8,13 +8,15 @@
 import SwiftUI
 import SwiftData
 
+
+
 @main
 struct StoreItApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            StorageItem.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -25,7 +27,10 @@ struct StoreItApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                StorageItemsCoordinator(modelContext: sharedModelContainer.mainContext)
+                    .start()
+            }
         }
         .modelContainer(sharedModelContainer)
     }
