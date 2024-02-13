@@ -8,28 +8,41 @@
 import SwiftUI
 import SwiftData
 
-struct StorageItemsCoordinator {
-    let modelContext: ModelContext
-    
+class StorageItemsCoordinator {
     enum Destinations {
         case addItem
     }
     
+    let modelContext: ModelContext
+    var router: Router
+    lazy var repository = StorageItemRepository(modelContext: modelContext)
+    
+    init(modelContext: ModelContext, router: Router) {
+        self.modelContext = modelContext
+        self.router = router
+    }
+    
     @ViewBuilder
     func start() -> some View {
-        StorageItemsView()
-            .navigationDestination(for: Destinations.self) { destination in
+        let presenter = StorageItemsPresenter(repository: repository)
+        StorageItemsView(presenter: presenter)
+            .navigationDestination(for: Destinations.self) { [weak self] destination in
                 switch destination {
                 case .addItem:
-                    startAddStorageItem()
+                    self?.startAddStorageItem()
                 }
             }
     }
     
     @ViewBuilder
     private func startAddStorageItem() -> some View {
-        let repository = StorageItemRepository(modelContext: modelContext)
-        let presenter = AddStorageItemPresenter(repository: repository)
+        let presenter = AddStorageItemPresenter(repository: repository, delegate: self)
         AddStorageItemView(presenter: presenter)
+    }
+}
+
+extension StorageItemsCoordinator: AddStoragePresenterDelegate {
+    func didAddItem() {
+        router.navigateBack()
     }
 }

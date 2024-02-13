@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		62EF375F2B7BD49E00CEF78C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EF375E2B7BD49E00CEF78C /* Router.swift */; };
+		62EF37622B7BDBDB00CEF78C /* StorageItemsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EF37612B7BDBDB00CEF78C /* StorageItemsPresenter.swift */; };
 		62F3F26D2B7AA10700600B23 /* StoreItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F3F26C2B7AA10700600B23 /* StoreItApp.swift */; };
 		62F3F2732B7AA10800600B23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62F3F2722B7AA10800600B23 /* Assets.xcassets */; };
 		62F3F2762B7AA10800600B23 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62F3F2752B7AA10800600B23 /* Preview Assets.xcassets */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		62EF375E2B7BD49E00CEF78C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		62EF37612B7BDBDB00CEF78C /* StorageItemsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemsPresenter.swift; sourceTree = "<group>"; };
 		62F3F2692B7AA10700600B23 /* StoreIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62F3F26C2B7AA10700600B23 /* StoreItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItApp.swift; sourceTree = "<group>"; };
 		62F3F2722B7AA10800600B23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		62EF37602B7BDBCE00CEF78C /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				62F3F2A42B7AAEDA00600B23 /* AddStorageItemPresenter.swift */,
+				62EF37612B7BDBDB00CEF78C /* StorageItemsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		62F3F2602B7AA10700600B23 = {
 			isa = PBXGroup;
 			children = (
@@ -145,11 +158,11 @@
 		62F3F29A2B7AA2E200600B23 /* StorageItems */ = {
 			isa = PBXGroup;
 			children = (
+				62EF37602B7BDBCE00CEF78C /* Presenter */,
 				62F3F2AE2B7AC48F00600B23 /* Repository */,
 				62F3F2AB2B7AC31800600B23 /* Model */,
 				62F3F2A92B7AC21400600B23 /* Views */,
 				62F3F29D2B7AA82700600B23 /* StorageItemsCoordinator.swift */,
-				62F3F2A42B7AAEDA00600B23 /* AddStorageItemPresenter.swift */,
 			);
 			path = StorageItems;
 			sourceTree = "<group>";
@@ -191,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				62F3F2B32B7ACD4B00600B23 /* New Group */,
+				62EF375E2B7BD49E00CEF78C /* Router.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -332,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62EF375F2B7BD49E00CEF78C /* Router.swift in Sources */,
 				62F3F2AD2B7AC32400600B23 /* StorageItem.swift in Sources */,
 				62F3F2B02B7AC4A400600B23 /* StorageItemRepository.swift in Sources */,
 				62F3F29E2B7AA82700600B23 /* StorageItemsCoordinator.swift in Sources */,
@@ -339,6 +354,7 @@
 				62F3F2A52B7AAEDA00600B23 /* AddStorageItemPresenter.swift in Sources */,
 				62F3F29C2B7AA2F800600B23 /* StorageItemsView.swift in Sources */,
 				62F3F2A12B7AA8D200600B23 /* AddStorageItemView.swift in Sources */,
+				62EF37622B7BDBDB00CEF78C /* StorageItemsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

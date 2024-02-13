@@ -8,28 +8,32 @@
 import SwiftUI
 import PhotosUI
 
-struct AddStorageItemView: View {
-    @StateObject var presenter: AddStorageItemPresenter
+struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresenterType {
+    @StateObject var presenter: Presenter
     @State var selectedItems: [PhotosPickerItem] = []
+    @State var pucharseDate: Date = Date()
     
     var body: some View {
         content
             .navigationTitle("Add item")
             .toolbar {
-                Button(action: tappedSaveItem,
-                       label: {
-                    Text("Save")
-                })
+                switch presenter.state {
+                case .idle:
+                    Button(action: tappedSaveItem,
+                           label: {
+                        Text("Save")
+                    })
+                case .loading:
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                }
             }
     }
     
     private var content: some View {
         Form {
             imageSection
-            
-            Section("Basic information") {
-                TextField("Name", text: $presenter.itemName)
-            }
+            basicInfoSection
         }
     }
     
@@ -62,12 +66,37 @@ struct AddStorageItemView: View {
         }.listRowBackground(Color(UIColor.systemGroupedBackground))
     }
     
+    private var basicInfoSection: some View {
+        Section("Basic information") {
+            HStack {
+                Text("Item #")
+                Spacer()
+                Text(String(format: "%05d", presenter.itemNumber))
+            }
+            TextField("Name", text: $presenter.itemName)
+            TextField("Descrição", text: $presenter.itemDescription)
+            
+            if presenter.pucharseDate == nil {
+                Button("Add pucharse date", action: addPucharseDate)
+            } else {
+                DatePicker("Pucharse date",
+                           selection: $pucharseDate,
+                           displayedComponents: [.date])
+                    .onChange(of: pucharseDate, updatePucharseDate)
+            }
+        }
+    }
+    
     private func tappedSaveItem() {
         presenter.tappedSaveItem()
     }
     
-    private func tappedAddImage() {
-        
+    private func addPucharseDate() {
+        presenter.pucharseDate = Date()
+    }
+    
+    private func updatePucharseDate() {
+        presenter.pucharseDate = pucharseDate
     }
     
     private func updateSelectedImage() {
@@ -81,6 +110,20 @@ struct AddStorageItemView: View {
 
 #Preview {
     NavigationStack {
-        AddStorageItemView(presenter: AddStorageItemPresenter())
+        AddStorageItemView(presenter: AddStorageItemPresenterMock())
+    }
+}
+
+fileprivate class AddStorageItemPresenterMock: AddStorageItemPresenterType {
+    var delegate: AddStoragePresenterDelegate?
+    @Published var pucharseDate: Date?
+    @Published var itemName: String = String()
+    @Published var itemImage: Data?
+    @Published var itemDescription: String = String()
+    @Published var state: AddStorageItemState = .idle
+    @Published var itemNumber: Int = 3
+    
+    func tappedSaveItem() {
+        state = .loading
     }
 }
