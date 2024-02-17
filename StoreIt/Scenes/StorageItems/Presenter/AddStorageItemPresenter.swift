@@ -28,7 +28,7 @@ protocol AddStorageItemPresenterType: AnyObject, ObservableObject {
 }
 
 class AddStorageItemPresenter: AddStorageItemPresenterType {
-    let repository: StorageItemRepository
+    @Inject var repository: StorageItemRepository
     weak var delegate: AddStoragePresenterDelegate?
     
     @Published var state: AddStorageItemState = .idle
@@ -38,8 +38,7 @@ class AddStorageItemPresenter: AddStorageItemPresenterType {
     @Published var pucharseDate: Date?
     @Published var itemNumber: Int = 0
 
-    init(repository: StorageItemRepository, delegate: AddStoragePresenterDelegate) {
-        self.repository = repository
+    init(delegate: AddStoragePresenterDelegate) {
         self.delegate = delegate
         
         getModelNumber()
@@ -47,16 +46,24 @@ class AddStorageItemPresenter: AddStorageItemPresenterType {
     
     func tappedSaveItem() {
         state = .loading
-        var item = StorageItem(id: itemNumber, name: itemName)
-        item.pucharseDate = pucharseDate
-        item.itemDescription = itemDescription.isEmpty ? nil : itemDescription
-        
-        repository.add(item: item)
-        delegate?.didAddItem()
+        Task {
+            do {
+                var item = StorageItem(tag: itemNumber, name: itemName)
+                item.pucharseDate = pucharseDate
+                item.itemDescription = itemDescription.isEmpty ? nil : itemDescription
+                try await repository.add(item: item)
+                delegate?.didAddItem()
+            } catch {
+                state = .idle
+            }
+        }
     }
     
     private func getModelNumber() {
-        itemNumber = repository.fetchItems().count + 1
-        
+        Task {
+            let items = try? await repository.fetchItems()
+            itemNumber = items?.count ?? 0
+            itemNumber += 1
+        }
     }
 }

@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-public final class Router: ObservableObject {
-    @Published public var navPath = NavigationPath()
-    public init() {}
+final class Router: ObservableObject {
+    @Published var navPath = NavigationPath()
+    
+    init() {}
 
     public func navigate(to destination: any Hashable) {
         navPath.append(destination)

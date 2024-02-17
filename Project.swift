@@ -47,6 +47,9 @@ func releaseProjectSettings() -> SettingsDictionary {
 let project = Project(
     name: "StoreIt",
     organizationName: "M O DE ARAUJO TECNOLOGIA DA INFORMACAO LTDA",
+    packages: [
+        .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0")
+    ],
     settings: .settings(configurations: [
         .debug(name: "Debug", settings: debugProjectSettings()),
         .release(name: "Release", settings: releaseProjectSettings())
@@ -56,13 +59,16 @@ let project = Project(
             name: "StoreIt",
             destinations: [.iPhone, .iPad],
             product: .app,
-            bundleId: "com.turingitservices.storeit",
+            bundleId: "com.turingitservices.store-it",
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["StoreIt/**"],
             resources: [
                 "StoreIt/Resources/**",
             ],
             entitlements: "StoreIt/StoreIt.entitlements",
+            dependencies: [
+                .package(product: "Swinject")
+            ],
             settings: .settings(configurations: [
                 .debug(name: "Debug", settings: debugSettings()),
                 .release(name: "Release", settings: releaseSettings())
@@ -72,7 +78,7 @@ let project = Project(
             name: "StoreItTests",
             destinations: [.iPhone],
             product: .unitTests,
-            bundleId: "com.turingitservices.storeit.tests",
+            bundleId: "com.turingitservices.store-it-tests",
             infoPlist: .default,
             sources: ["StoreItTests/**"],
             dependencies: [

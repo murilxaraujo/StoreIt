@@ -9,18 +9,19 @@ import Foundation
 
 protocol StorageItemsPresenterType: ObservableObject {
     var items: [StorageItem] { get set }
+    func getItems()
 }
 
 class StorageItemsPresenter: StorageItemsPresenterType {
-    let repository: StorageItemRepository
+    
+    @Inject var repository: StorageItemRepository
     @Published var items: [StorageItem] = []
     
-    init(repository: StorageItemRepository) {
-        self.repository = repository
-        getItems()
-    }
-    
     func getItems() {
-        items = repository.fetchItems()
+        Task {
+            let itemsArray = try? await repository.fetchItems()
+            items = itemsArray ?? []
+        }
+        
     }
 }
