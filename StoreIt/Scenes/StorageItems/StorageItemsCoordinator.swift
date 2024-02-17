@@ -13,18 +13,15 @@ class StorageItemsCoordinator {
         case addItem
     }
     
-    let modelContext: ModelContext
     var router: Router
-    lazy var repository = StorageItemRepository(modelContext: modelContext)
     
-    init(modelContext: ModelContext, router: Router) {
-        self.modelContext = modelContext
+    init(router: Router) {
         self.router = router
     }
     
     @ViewBuilder
     func start() -> some View {
-        let presenter = StorageItemsPresenter(repository: repository)
+        let presenter = StorageItemsPresenter()
         StorageItemsView(presenter: presenter)
             .navigationDestination(for: Destinations.self) { [weak self] destination in
                 switch destination {
@@ -36,7 +33,7 @@ class StorageItemsCoordinator {
     
     @ViewBuilder
     private func startAddStorageItem() -> some View {
-        let presenter = AddStorageItemPresenter(repository: repository, delegate: self)
+        let presenter = AddStorageItemPresenter(delegate: self)
         AddStorageItemView(presenter: presenter)
     }
 }

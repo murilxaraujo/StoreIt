@@ -18,20 +18,28 @@ struct StorageItemsView<Presenter>: View where Presenter: StorageItemsPresenterT
                     Image(systemName: "plus")
                 }
             })
+            .onAppear {
+                presenter.getItems()
+            }
     }
     
     var content: some View {
-        List($presenter.items) { item in
+        List($presenter.items, id: \.tag) { item in
             HStack {
                 ZStack {
                     Circle()
                         .frame(width: 60, height: 60)
                         .foregroundStyle(Gradient(colors: [.blue, .blue.opacity(0.8)]))
-                    Image(systemName: "key")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height: 40)
-                        .foregroundStyle(.white)
+                    if let imageData = item.imageData.wrappedValue,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(.white)
+                    } else {
+                        Image(systemName: "key")
+                    }
                     
                 }
                 VStack(alignment: .leading) {
@@ -48,7 +56,7 @@ struct StorageItemsView<Presenter>: View where Presenter: StorageItemsPresenterT
                     Image(systemName: "tag")
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 16, height: 16)
-                    Text("\(String(format: "%05d", item.id))")
+                    Text("\(String(format: "%05d", item.tag.wrappedValue))")
                         .font(.caption)
                         .multilineTextAlignment(.trailing)
                 }
@@ -71,8 +79,12 @@ struct StorageItemsView<Presenter>: View where Presenter: StorageItemsPresenterT
 }
 
 fileprivate class StorageItemsPresenterMock: StorageItemsPresenterType {
+    func getItems() {
+        // empty
+    }
+    
     @Published var items: [StorageItem] = [
-        StorageItem(id: 1, name: "TV", itemDescription: "TV Sala", pucharseDate: nil),
-        StorageItem(id: 2, name: "TV", itemDescription: "TV Sala", pucharseDate: Date())
+        StorageItem(tag: 1, name: "TV", itemDescription: "TV Sala", pucharseDate: nil),
+        StorageItem(tag: 2, name: "TV", itemDescription: "TV Sala", pucharseDate: Date())
     ]
 }

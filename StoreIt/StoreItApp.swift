@@ -6,21 +6,20 @@
 //
 
 import SwiftUI
-import SwiftData
-
-
+import Swinject
 
 @main
 struct StoreItApp: App {
-    var sharedModelContainer: ModelContainer
-    @ObservedObject var router: Router
+    @ObservedObject
+    var router: Router
+    
     let coordinator: StorageItemsCoordinator
 
     init() {
+        Container.shared = DependenciesContainer.production
         let router = Router()
-        sharedModelContainer = StoreItApp.createModelContainer()
         self.router = router
-        coordinator = StorageItemsCoordinator(modelContext: sharedModelContainer.mainContext, router: router)
+        coordinator = StorageItemsCoordinator(router: router)
     }
     
     var body: some Scene {
@@ -28,19 +27,6 @@ struct StoreItApp: App {
             NavigationStack(path: $router.navPath) {
                 coordinator.start()
             }
-        }
-    }
-    
-    static func createModelContainer() -> ModelContainer {
-        let schema = Schema([
-            StorageItem.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
         }
     }
 }

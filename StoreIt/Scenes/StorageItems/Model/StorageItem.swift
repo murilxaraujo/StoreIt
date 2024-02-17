@@ -6,19 +6,13 @@
 //
 
 import Foundation
-import SwiftData
+import CloudKit
 
-@Model
-class StorageItem {
-    let id: Int
+struct StorageItem {
+    var recordID: CKRecord.ID?
+    var tag: Int
     var name: String
     var itemDescription: String?
     var pucharseDate: Date?
-    
-    init(id: Int, name: String, itemDescription: String? = nil, pucharseDate: Date? = nil) {
-        self.id = id
-        self.name = name
-        self.itemDescription = itemDescription
-        self.pucharseDate = pucharseDate
-    }
+    var imageData: Data?
 }

@@ -39,16 +39,17 @@ struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresen
     
     private var imageSection: some View {
         Section() {
-            if let image = presenter.itemImage {
-                Image(uiImage: UIImage(data: image)!)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-            } else {
-                PhotosPicker(selection: $selectedItems,
-                             maxSelectionCount: 1,
-                             matching: .images,
-                             photoLibrary: .shared()) {
+            PhotosPicker(selection: $selectedItems,
+                         maxSelectionCount: 1,
+                         matching: .images,
+                         photoLibrary: .shared()) {
+                if let image = presenter.itemImage {
+                    Image(uiImage: UIImage(data: image)!)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity, maxHeight: 400)
+                        .clipShape(RoundedRectangle(cornerSize: /*@START_MENU_TOKEN@*/CGSize(width: 20, height: 10)/*@END_MENU_TOKEN@*/))
+                } else {
                     VStack(alignment: .leading, content: {
                         Image(systemName: "plus.circle.fill")
                             .renderingMode(.template)
@@ -60,9 +61,9 @@ struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresen
                             .padding(.bottom)
                             .foregroundStyle(Color.accentColor)
                     })
-                }.onChange(of: selectedItems, updateSelectedImage)
-                .frame(maxWidth: .infinity)
-            }
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                }
+            }.onChange(of: selectedItems, updateSelectedImage)
         }.listRowBackground(Color(UIColor.systemGroupedBackground))
     }
     
