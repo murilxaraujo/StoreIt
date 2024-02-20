@@ -4,6 +4,14 @@ import CloudKit
 protocol StorageItemRepository {
     func add(item: StorageItem) async throws
     func fetchItems() async throws -> [StorageItem]
+    func delete(item: StorageItem) async throws
+    func update(item: StorageItem) async throws
+}
+
+enum StorageItemRepositoryError: Error {
+    case invalidItemMissingRecordID
+    case unableToDeleteOldImage
+    case other(Error)
 }
 
 class StorageItemCloudKitRepository: StorageItemRepository {
@@ -31,8 +39,29 @@ class StorageItemCloudKitRepository: StorageItemRepository {
         }
     }
     
-    private func createRecord(from item: StorageItem) -> CKRecord {
-        let record = CKRecord(recordType: StorageItemKeys.type.rawValue)
+    func delete(item: StorageItem) async throws {
+        guard let recordID = item.recordID else {
+            throw StorageItemRepositoryError.invalidItemMissingRecordID
+        }
+        try await db.deleteRecord(withID: recordID)
+    }
+    
+    func update(item: StorageItem) async throws {
+        guard let recordID = item.recordID else {
+            throw StorageItemRepositoryError.invalidItemMissingRecordID
+        }
+        
+        do {
+            let existingRecord = try await db.record(for: recordID)
+            let updatedRecord = createRecord(from: item, existingRecord: existingRecord)
+            try await db.save(updatedRecord)
+        } catch {
+            throw StorageItemRepositoryError.other(error)
+        }
+    }
+    
+    private func createRecord(from item: StorageItem, existingRecord: CKRecord? = nil) -> CKRecord {
+        let record = existingRecord ?? CKRecord(recordType: StorageItemKeys.type.rawValue)
         record[StorageItemKeys.tag.rawValue] = item.tag
         record[StorageItemKeys.name.rawValue] = item.name
         record[StorageItemKeys.itemDescription.rawValue] = item.itemDescription
@@ -40,6 +69,8 @@ class StorageItemCloudKitRepository: StorageItemRepository {
         
         if let imageData = item.imageData, let url = fileService.cache(imageData, forID: UUID()) {
             record[StorageItemKeys.image.rawValue] = CKAsset(fileURL: url)
+        } else {
+            record[StorageItemKeys.image.rawValue] = nil
         }
         
         return record
