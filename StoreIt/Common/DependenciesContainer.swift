@@ -20,6 +20,9 @@ class DependenciesContainer {
         container.register(FileService.self) { _ in
             CacheFileService()
         }
+        container.register(KeyValueStore.self) { _ in
+            NSUbiquitousKeyValueStore.default
+        }
         return container
     }()
 }
