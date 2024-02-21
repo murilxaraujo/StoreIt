@@ -24,51 +24,57 @@ struct StorageItemsView<Presenter>: View where Presenter: StorageItemsPresenterT
     }
     
     var content: some View {
-        List($presenter.items, id: \.tag) { item in
-            HStack {
-                ZStack {
-                    Circle()
-                        .frame(width: 60, height: 60)
-                        .foregroundStyle(Gradient(colors: [.blue, .blue.opacity(0.8)]))
-                    if let imageData = item.imageData.wrappedValue,
-                       let uiImage = UIImage(data: imageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                            .foregroundStyle(.white)
-                    } else {
-                        Image(systemName: "key")
-                    }
-                    
-                }
-                VStack(alignment: .leading) {
-                    Text(item.name.wrappedValue)
-                        .font(.subheadline)
-                        .bold()
-                    if let description = item.itemDescription.wrappedValue {
-                        Text(description)
-                            .font(.footnote)
-                    }
-                }.padding()
-                Spacer()
+        List {
+            ForEach($presenter.items, id: \.tag) { item in
                 HStack {
-                    Image(systemName: "tag")
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height: 16)
-                    Text("\(String(format: "%05d", item.tag.wrappedValue))")
-                        .font(.caption)
-                        .multilineTextAlignment(.trailing)
+                    ZStack {
+                        Circle()
+                            .frame(width: 60, height: 60)
+                            .foregroundStyle(Gradient(colors: [.blue, .blue.opacity(0.8)]))
+                        if let imageData = item.imageData.wrappedValue,
+                           let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 60, height: 60)
+                                .clipShape(Circle())
+                        } else {
+                            Image(systemName: "key")
+                        }
+                        
+                    }
+                    VStack(alignment: .leading) {
+                        Text(item.name.wrappedValue)
+                            .font(.subheadline)
+                            .bold()
+                        if let description = item.itemDescription.wrappedValue {
+                            Text(description)
+                                .font(.footnote)
+                        }
+                    }.padding()
+                    Spacer()
+                    HStack {
+                        Image(systemName: "tag")
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 16, height: 16)
+                        Text("\(String(format: "%05d", item.tag.wrappedValue))")
+                            .font(.caption)
+                            .multilineTextAlignment(.trailing)
+                    }
+                    .padding(8)
+                    .foregroundStyle(.white)
+                    .background {
+                        Color.blue
+                    }
+                    .cornerRadius(8)
+                        
                 }
-                .padding(8)
-                .foregroundStyle(.white)
-                .background {
-                    Color.blue
-                }
-                .cornerRadius(8)
-                    
-            }
+            }.onDelete(perform: delete)
         }
+    }
+    
+    func delete(at offsets: IndexSet) {
+        presenter.deleteItems(at: offsets)
     }
 }
 
@@ -79,6 +85,10 @@ struct StorageItemsView<Presenter>: View where Presenter: StorageItemsPresenterT
 }
 
 fileprivate class StorageItemsPresenterMock: StorageItemsPresenterType {
+    func deleteItems(at offSets: IndexSet) {
+        // empty
+    }
+    
     func getItems() {
         // empty
     }

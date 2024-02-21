@@ -29,6 +29,7 @@ protocol AddStorageItemPresenterType: AnyObject, ObservableObject {
 
 class AddStorageItemPresenter: AddStorageItemPresenterType {
     @Inject var repository: StorageItemRepository
+    @Inject var keyValueStore: KeyValueStore
     weak var delegate: AddStoragePresenterDelegate?
     
     @Published var state: AddStorageItemState = .idle
@@ -51,7 +52,9 @@ class AddStorageItemPresenter: AddStorageItemPresenterType {
                 var item = StorageItem(tag: itemNumber, name: itemName)
                 item.pucharseDate = pucharseDate
                 item.itemDescription = itemDescription.isEmpty ? nil : itemDescription
+                item.imageData = itemImage
                 try await repository.add(item: item)
+                keyValueStore.set(itemNumber, forKey: "currentTag")
                 delegate?.didAddItem()
             } catch {
                 state = .idle
@@ -61,9 +64,12 @@ class AddStorageItemPresenter: AddStorageItemPresenterType {
     
     private func getModelNumber() {
         Task {
-            let items = try? await repository.fetchItems()
-            itemNumber = items?.count ?? 0
-            itemNumber += 1
+            var currentTag = keyValueStore.object(forKey: "currentTag") as? Int
+            if let currentTag = currentTag {
+                itemNumber = currentTag + 1
+            } else {
+                itemNumber = 1
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 import Foundation
 import CloudKit
+import OSLog
 
 protocol StorageItemRepository {
     func add(item: StorageItem) async throws

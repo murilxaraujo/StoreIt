@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol FileService {
     func cache(_ data: Data, forID id: UUID) -> URL?
@@ -25,16 +26,17 @@ class CacheFileService: FileService {
     }
 
     func cache(_ data: Data, forID id: UUID) -> URL? {
+        Logger.fileService.info("Caching data for id <\(id)>, data has \(data.count) bytes")
         guard let cacheDirectory = self.cacheDirectory else { return nil }
         
         let fileURL = cacheDirectory.appendingPathComponent(id.uuidString)
         
         do {
             try data.write(to: fileURL)
-            print("File cached at: \(fileURL)")
+            Logger.fileService.info("Data chached in url \(fileURL.absoluteString)")
             return fileURL
         } catch {
-            print("Error caching file: \(error.localizedDescription)")
+            Logger.fileService.error("Error caching file: \(error)")
             return nil
         }
     }
