@@ -12,6 +12,7 @@ struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresen
     @StateObject var presenter: Presenter
     @State var selectedItems: [PhotosPickerItem] = []
     @State var pucharseDate: Date = Date()
+    @State var isPresentingSelectLocation = false
     
     var body: some View {
         content
@@ -27,13 +28,16 @@ struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresen
                     ProgressView()
                         .progressViewStyle(.circular)
                 }
-            }
+            }.sheet(isPresented: $isPresentingSelectLocation, content: {
+                StorageLocationsView()
+            })
     }
     
     private var content: some View {
         Form {
             imageSection
             basicInfoSection
+            additionalInformationSection
         }
     }
     
@@ -88,6 +92,12 @@ struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresen
         }
     }
     
+    private var additionalInformationSection: some View {
+        Section("More information") {
+            Button("Add location", action: addLocationTapped)
+        }
+    }
+    
     private func tappedSaveItem() {
         presenter.tappedSaveItem()
     }
@@ -98,6 +108,10 @@ struct AddStorageItemView<Presenter>: View where Presenter: AddStorageItemPresen
     
     private func updatePucharseDate() {
         presenter.pucharseDate = pucharseDate
+    }
+    
+    private func addLocationTapped() {
+        isPresentingSelectLocation = true
     }
     
     private func updateSelectedImage() {
@@ -126,5 +140,9 @@ fileprivate class AddStorageItemPresenterMock: AddStorageItemPresenterType {
     
     func tappedSaveItem() {
         state = .loading
+    }
+    
+    func selectLocation() {
+        // Empty
     }
 }

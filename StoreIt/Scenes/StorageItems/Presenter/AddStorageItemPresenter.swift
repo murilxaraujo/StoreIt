@@ -64,7 +64,7 @@ class AddStorageItemPresenter: AddStorageItemPresenterType {
     
     private func getModelNumber() {
         Task {
-            var currentTag = keyValueStore.object(forKey: "currentTag") as? Int
+            let currentTag = keyValueStore.object(forKey: "currentTag") as? Int
             if let currentTag = currentTag {
                 itemNumber = currentTag + 1
             } else {
